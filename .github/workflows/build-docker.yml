@@ -31,6 +31,9 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+    - run: git checkout HEAD^
 
     - name: Docker Login
       if: ${{ inputs.push == true && github.ref_name == 'main' }}

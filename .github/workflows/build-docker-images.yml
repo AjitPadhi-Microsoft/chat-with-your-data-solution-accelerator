@@ -29,10 +29,6 @@ jobs:
           id: extract_branch
         - name: Print branch name
           run: echo "${{ steps.extract_branch.outputs.branch }}"
-        - name: Checkout
-          uses: actions/checkout@v4
-          with:
-            ref: ${{ steps.extract_branch.outputs.branch }}
   docker-build:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     strategy:

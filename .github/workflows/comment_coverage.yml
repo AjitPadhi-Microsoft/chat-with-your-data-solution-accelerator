@@ -5,6 +5,10 @@ on:
     workflows: [Tests]
     types:
       - completed
+    branches:
+      - main
+      - dev
+      - demo
 
 permissions:
   pull-requests: write
