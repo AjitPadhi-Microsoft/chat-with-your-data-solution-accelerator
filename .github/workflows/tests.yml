@@ -2,9 +2,15 @@ name: Tests
 
 on:
   push:
-    branches: [main, dev, demo]
+    branches:
+      - main
+      - dev
+      - demo
   pull_request:
-    branches: [main, dev, demo]
+    branches:
+      - main
+      - dev
+      - demo
     types:
       - opened
       - ready_for_review
