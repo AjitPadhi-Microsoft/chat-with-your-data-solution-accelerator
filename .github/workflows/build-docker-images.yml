@@ -1,9 +1,7 @@
 name: Build Docker Images
 
 on:
-  workflow_run:
-    workflows: [Tests]
-    types: [completed]
+  push:
     branches:
       - main
       - dev
@@ -24,15 +22,14 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-        - name: logging
-          run: echo "${{github.event.workflow_run.GITHUB_REF}}"
-        - name: Extract branch name
-          run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-          id: extract_branch
         - name: Print branch name
-          run: echo "${{ steps.extract_branch.outputs.branch }}"
+          run: |
+            echo "GITHUB_REF: ${{ github.ref}}"
+            echo "GITHUB_REF: ${{ github.ref_name}}
+            echo "GITHUB_EVENT_NAME: ${{ github.event_name}}"
+            echo "GITHUB_HEAD_REF: ${{ github.head_ref}}
+            echo "GITHUB_BASE_REF: ${{ github.base_ref}}
   docker-build:
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
         include:
