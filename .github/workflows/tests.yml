@@ -97,14 +97,3 @@ jobs:
         run: make unittest-frontend
       - name: Lint
         run: make lint
-      - name: Install GitHub CLI
-        run: sudo apt-get install gh
-      - name: Set GH_TOKEN
-        run: echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
-      - name: Trigger Build Docker Images Workflow
-        if: github.event_name != 'pull_request'
-        run: |
-          BRANCH_NAME=${GITHUB_REF#refs/heads/}
-          gh workflow run build-docker-images.yml --ref $BRANCH_NAME -f branch_name=$BRANCH_NAME
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
