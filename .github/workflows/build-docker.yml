@@ -15,9 +15,6 @@ on:
       dockerfile:
         required: true
         type: string
-      branch:
-        required: true
-        type: string
       push:
         required: true
         type: boolean
@@ -31,10 +28,12 @@ jobs:
   docker-build:
     runs-on: ubuntu-latest
     steps:
-    - name: Get branch detail
+    - name: Print branch detail
       run: |
-        echo "Input status ${{ inputs.push }}"
-        echo "Input branch ${{ inputs.branch }}"
+        echo "${{ inputs.push }}"
+        echo "${{ github.ref_name }}"
+    - name: Checkout
+      uses: actions/checkout@v4
 
     - name: Docker Login
       if: ${{ inputs.push == true && github.ref_name == 'main' }}
