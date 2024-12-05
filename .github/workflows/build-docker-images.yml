@@ -19,6 +19,11 @@ on:
     - reopened
     - synchronize
   merge_group:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch name'
+        required: true
 
 jobs:
   test-job:
@@ -30,6 +35,7 @@ jobs:
           ref: ${{ github.event.workflow_run.head_branch }}
       - run: git branch
       - run: env
+      - run: echo "branch.....${{github.event.inputs.branch_name}}""
 
   docker-build:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
