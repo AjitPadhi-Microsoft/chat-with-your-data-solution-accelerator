@@ -28,7 +28,10 @@ jobs:
   docker-build:
     runs-on: ubuntu-latest
     steps:
-
+    - name: Print branch detail
+      run: |
+        echo "${{ inputs.push }}"
+        echo "${{ github.ref_name }}"
     - name: Checkout
       uses: actions/checkout@v4
 
