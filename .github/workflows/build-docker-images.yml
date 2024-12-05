@@ -32,10 +32,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: ${{ github.event.inputs.branch_name }}
       - run: git branch
       - run: env
-      - run: echo "branch.....${{github.event.inputs.branch_name}}""
+      - run: echo "branch... ${{github.event.inputs.branch_name}}"
 
   docker-build:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
