@@ -31,6 +31,8 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.workflow_run.head_sha }}
 
     - name: Docker Login
       if: ${{ inputs.push == true && github.ref_name == 'main' }}
