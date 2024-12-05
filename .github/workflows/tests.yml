@@ -102,6 +102,8 @@ jobs:
       - name: Set GH_TOKEN
         run: echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
       - name: Trigger Build Docker Images Workflow
-        run: gh workflow run build-docker-images.yml --ref ${{ github.head_ref || github.ref_name }}
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          gh workflow run build-docker-images.yml --ref $BRANCH_NAME -f branch_name=$BRANCH_NAME
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
