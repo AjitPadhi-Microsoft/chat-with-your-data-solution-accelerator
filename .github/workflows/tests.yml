@@ -97,20 +97,11 @@ jobs:
         run: make unittest-frontend
       - name: Lint
         run: make lint
+      - name: Install GitHub CLI
+        run: sudo apt-get install gh
+      - name: Set GH_TOKEN
+        run: echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
       - name: Trigger Build Docker Images Workflow
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const branchName = process.env.GITHUB_REF.replace('refs/heads/', '');
-            const response = await github.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'build-docker-images.yml',
-              ref: github.ref,
-              inputs: {
-                branch_name: branchName
-              }
-            });
-            console.log(response);
+        run: gh workflow run build-docker-images.yml --ref ${{ github.head_ref || github.ref_name }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
