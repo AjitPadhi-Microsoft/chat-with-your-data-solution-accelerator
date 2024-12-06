@@ -1,11 +1,13 @@
 name: Build Docker Images
 
 on:
-  merge_group:
+  push:
     branches:
       - main
       - dev
       - demo
+  merge_group:
+
 jobs:
   docker-build:
     strategy:
