@@ -31,7 +31,7 @@ jobs:
     - name: Print branch detail
       run: |
         echo "${{ inputs.push }}"
-        echo "${{ github.ref_name }}"
+        echo "${{ github.ref }}"
     - name: Checkout
       uses: actions/checkout@v4
 
