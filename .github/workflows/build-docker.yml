@@ -32,6 +32,7 @@ jobs:
       run: |
         echo "${{ inputs.push }}"
         echo "${{ github.ref }}"
+        echo "branch tag ${{ inputs.app_name}}:${{ github.ref_name == 'main' && 'latest' || github.ref_name == 'dev' && 'dev' || github.ref_name == 'demo' && 'demo' || 'latest' }}"
     - name: Checkout
       uses: actions/checkout@v4
 
