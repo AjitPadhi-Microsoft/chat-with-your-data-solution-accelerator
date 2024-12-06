@@ -6,6 +6,11 @@ on:
       - main
       - dev
       - demo
+  pull_request:
+    branches:
+      - main
+      - dev
+      - demo
   merge_group:
 
 jobs:
