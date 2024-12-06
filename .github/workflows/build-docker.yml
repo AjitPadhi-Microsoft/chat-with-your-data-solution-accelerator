@@ -31,8 +31,8 @@ jobs:
     - name: Print branch detail
       run: |
         echo "${{ inputs.push }}"
-        echo "${{ github.ref }}"
-        echo "branch tag ${{ inputs.app_name}}:${{ github.ref_name == 'main' && 'latest' || github.ref_name == 'dev' && 'dev' || github.ref_name == 'demo' && 'demo' || 'latest' }}"
+        echo "${{ github.ref_name }}"
+        echo "branch tag ${{ inputs.app_name}}:${{ github.ref_name == 'main' && 'latest' || github.ref_name == 'dev' && 'dev' || github.ref_name == 'demo' && 'demo' || github.ref_name }}"
     - name: Checkout
       uses: actions/checkout@v4
 
@@ -65,7 +65,7 @@ jobs:
         context: .
         file: ${{ inputs.dockerfile }}
         push: ${{ inputs.push }}
-        cache-from: type=registry,ref=${{ inputs.registry }}/${{ inputs.app_name}}:${{ github.ref_name == 'main' && 'latest' || github.ref_name == 'dev' && 'dev' || github.ref_name == 'demo' && 'demo' || 'latest' }}
+        cache-from: type=registry,ref=${{ inputs.registry }}/${{ inputs.app_name}}:${{ github.ref_name == 'main' && 'latest' || github.ref_name == 'dev' && 'dev' || github.ref_name == 'demo' && 'demo' || github.ref_name }}
         tags: |
-          ${{ inputs.registry }}/${{ inputs.app_name}}:${{ github.ref_name == 'main' && 'latest' || github.ref_name == 'dev' && 'dev' || github.ref_name == 'demo' && 'demo' || 'latest' }}
+          ${{ inputs.registry }}/${{ inputs.app_name}}:${{ github.ref_name == 'main' && 'latest' || github.ref_name == 'dev' && 'dev' || github.ref_name == 'demo' && 'demo' || github.ref_name }}
           ${{ inputs.registry }}/${{ inputs.app_name}}:${{ steps.date.outputs.date }}_${{ github.run_number }}
